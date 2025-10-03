@@ -1,0 +1,91 @@
+/* Base styles for the range input */
+input[type="range"] {
+    /* removing default appearance */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    /* creating a custom design */
+    width: 100%;
+    height: 6px;
+    background: #EFEFEF;
+    border-radius: 3px;
+    border: 1px solid #545454;
+    cursor: pointer;
+    margin: 10px 0;
+    outline: none;
+}
+
+/* Remove default focus styles */
+input[type="range"]:focus {
+    outline: none;
+}
+
+/* Track styles for Firefox */
+input[type="range"]::-moz-range-track {
+    width: 100%;
+    height: 6px;
+    background: #EFEFEF;
+    border-radius: 3px;
+    border: 1px solid #545454;
+}
+
+/* Thumb styles for Webkit/Blink (Chrome, Safari, newer versions of Opera) */
+input[type="range"]::-webkit-slider-thumb {
+    /* removing default appearance */
+    -webkit-appearance: none;
+    appearance: none;
+    /* creating a custom design */
+    width: 16px;
+    height: 16px;
+    background: var(--emphasis-color);
+    border-radius: 50%;
+    border: none;
+    transition: box-shadow 0.1s ease;
+}
+
+/* Thumb styles for Firefox */
+input[type="range"]::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--emphasis-color);
+    border: none;
+    transition: box-shadow 0.1s ease;
+}
+
+/* Disabled state */
+input[type="range"]:disabled {
+    background: #FAFAFA;
+    border-color: #D2D2D2;
+    cursor: not-allowed;
+}
+
+input[type="range"]:disabled::-webkit-slider-thumb {
+    background-color: #D1D1D1;
+}
+
+input[type="range"]:disabled::-moz-range-thumb {
+    background-color: #D1D1D1;
+}
+
+/* Hover state */
+input[type="range"]:enabled::-webkit-slider-thumb:hover {
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--emphasis-color) 40%, transparent);
+    transition: 0.1s;
+}
+
+input[type="range"]:enabled::-moz-range-thumb:hover {
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--emphasis-color) 40%, transparent);
+    transition: 0.1s;
+}
+
+/* Active state */
+input[type="range"]:enabled:active::-webkit-slider-thumb {
+    box-shadow: 0 0 0 1px var(--emphasis-color);
+    transition: 0.1s;
+}
+
+input[type="range"]:enabled:active::-moz-range-thumb {
+    box-shadow: 0 0 0 1px var(--emphasis-color);
+    transition: 0.1s;
+}

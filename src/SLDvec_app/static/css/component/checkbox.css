@@ -1,0 +1,65 @@
+/* Toggle style checkbox */
+
+.toggle {
+    margin: 3px 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.toggle input[type="checkbox"] {
+    height: 0;
+    width: 0;
+    visibility: hidden;
+}
+
+.toggle .slider {
+    cursor: pointer;
+    text-indent: -9999px;
+    width: 40px;
+    height: 20px;
+    background: grey;
+    /* border: #7e7e7e 2px solid; */
+    border-radius: 100px;
+    position: relative;
+    transition: 0.3s;
+}
+
+fieldset:disabled .toggle .slider,
+fieldset:disabled .toggle input:checked+.slider {
+    transition: 0s;
+    background: #D1D1D1;
+}
+
+.toggle .slider:after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    background: #fff;
+    border-radius: 90px;
+    transition: 0.1s ease-in-out;
+}
+
+.toggle input:checked+.slider {
+    background: var(--emphasis-color);
+}
+
+.toggle input:checked+.slider:after {
+    left: calc(100% - 2px);
+    transform: translateX(-100%);
+}
+
+.toggle .slider:active:after {
+    width: 25px;
+}
+
+.text-label {
+    margin-left: 10px;
+}
+
+fieldset:disabled .text-label {
+    color: #B4B4B4;
+}

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SLDvec App</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/reset.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/variable.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/component/range.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/component/checkbox.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/component/radio.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', path='asset/favicon.png') }}">
+</head>
+
+<body>
+    <div class="container">
+        <div class="canvas-container">
+            <canvas id="image-canvas"></canvas>
+            <canvas id="vector-canvas"></canvas>
+            <canvas id="intersection-canvas"></canvas>
+            <canvas id="graph-canvas"></canvas>
+            <div class="canvas-overlay" id="canvas-overlay">
+                <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                <span>Drop image here</span>
+            </div>
+            <canvas id="interaction-canvas"></canvas>
+            <svg class="loader" id="loader" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <circle class="spin" cx="100" cy="100" fill="none" r="50" stroke-width="5" stroke="#333"
+                    stroke-dasharray="100 315" stroke-linecap="round" />
+            </svg>
+        </div>
+
+        <div class="control-container">
+            <fieldset id="visualizaton-control-fieldset">
+                <legend>Visualizaton control</legend>
+
+
+                <label class="toggle">
+                    <input type="checkbox" id="show-image">
+                    <span class="slider"></span>
+                    <span class="text-label">Image</span>
+                </label>
+
+                <label class="radio-container">
+                    <input type="radio" id="show-base" disabled />
+                    <span class="text-label">Base Image</span>
+                </label>
+
+                <label class="radio-container">
+                    <input type="radio" id="show-blur" disabled />
+                    <span class="text-label">Blured Image</span>
+                </label>
+
+                <label class="radio-container">
+                    <input type="radio" id="show-binary" disabled />
+                    <span class="text-label">Binary Image</span>
+                </label>
+
+                <label class="toggle">
+                    <input type="checkbox" id="show-svg-contour">
+                    <span class="slider"></span>
+                    <span class="text-label">SVG contour</span>
+                </label>
+
+                <label class="toggle">
+                    <input type="checkbox" id="show-base-graph">
+                    <span class="slider"></span>
+                    <span class="text-label">Medial Axis</span>
+                </label>
+
+                <label class="toggle">
+                    <input type="checkbox" id="show-graph">
+                    <span class="slider"></span>
+                    <span class="text-label">Simplified Graph</span>
+                </label>
+
+                <label class="toggle">
+                    <input type="checkbox" id="show-intersection">
+                    <span class="slider"></span>
+                    <span class="text-label">Intersections</span>
+                </label>
+
+                <label class="toggle">
+                    <input type="checkbox" id="show-vector">
+                    <span class="slider"></span>
+                    <span class="text-label">Vectorization</span>
+                </label>
+
+                <div class="slider-container">
+                    <label for="repeat-range" id="repeat-label">Repeat gradient: 1.0</label>
+                    <input type="range" id="repeat-range" min="0.0" max="10.0" step="0.01" value="1.0">
+                </div>
+                <button id="reset-button">Reset View</button>
+
+            </fieldset>
+
+            <fieldset id="algorithm-control-fieldset">
+                <legend>Algorithm control</legend>
+
+                <fieldset id="image-processing-fieldset" disabled>
+                    <legend>Image Processing</legend>
+                    <div class="slider-container">
+                        <label for="scale-range" id="scale-label">Scale: 0</label>
+                        <input type="range" id="scale-range" min="0" max="5" step="0.1" value="0.0">
+                    </div>
+
+                    <div class="slider-container">
+                        <label for="thresh-range" id="thresh-label">Threshold: 0.00</label>
+                        <input type="range" id="thresh-range" min="0" max="1" step="0.01" value="0.00">
+                    </div>
+
+                    <button id="automatic-button">Use Automatic Threshold</button>
+                </fieldset>
+
+                <label class="toggle" id="multiple-lines-toggle">
+                    <input type="checkbox" id="multiple-lines">
+                    <span class="slider"></span>
+                    <span class="text-label">Multiple Lines</span>
+                </label>
+
+                <fieldset id="medial-axis-fieldset" disabled>
+                    <legend>Medial Axis</legend>
+                    <button id="medial-axis-button">Get Medial Axis</button>
+                    <button id="merge-branch-button">Merge Branch</button>
+                    <button id="split-node-button">Split Branch</button>
+                </fieldset>
+
+                <button id="order-graph-button">Order Graph & Vectorize</button>
+
+                <button id="export-button" disabled>Export SVG</button>
+            </fieldset>
+
+        </div>
+    </div>
+
+    <script>
+        canvases = document.querySelectorAll('canvas');
+        canvasContainer = document.getElementsByClassName('canvas-container')[0];
+
+        canvases.forEach(canvas => {
+            canvas.width = canvasContainer.offsetWidth - 20;
+            canvas.height = canvasContainer.offsetHeight - 20;
+
+            window.addEventListener('resize', () => {
+                canvas.width = canvasContainer.offsetWidth - 20;
+                canvas.height = canvasContainer.offsetHeight - 20;
+            });
+        });
+    </script>
+    <script type="module" src="{{ url_for('static', path='/js/App.js') }}"></script>
+</body>
+
+</html>

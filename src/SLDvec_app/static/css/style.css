@@ -1,0 +1,166 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+}
+
+/* Style the canvases */
+
+.canvas-container {
+    position: relative;
+    flex: 8;
+    height: 100vh;
+    padding: 10px;
+    margin: 0;
+}
+
+canvas {
+    position: absolute;
+}
+
+#interaction-canvas {
+    border: 2px solid #000;
+    border-radius: 20px;
+    transition: background-color 0.1s linear;
+    background-color: transparent;
+}
+
+#interaction-canvas.dragover {
+    border-color: #007bff;
+    border-width: 2px;
+    border-style: dashed;
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+#interaction-canvas.waiting {
+    background-color: rgba(255, 255, 255, 0.6);
+}
+
+
+.canvas-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 300%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #333;
+}
+
+.loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200px;
+    height: 200px;
+    transform: translate(-50%, -50%);
+    display: none;
+}
+
+
+/* Inspired by https://www.fffuel.co/svg-spinner/ */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes dash {
+    0% {
+        stroke-dasharray: 50 315;
+    }
+
+    50% {
+        stroke-dasharray: 100 315;
+    }
+
+    100% {
+        stroke-dasharray: 50 315;
+    }
+}
+
+.spin {
+    transform-origin: center;
+    animation: spin 1.0s ease-in-out infinite, dash 1.0s ease-in-out infinite;
+}
+
+/* Style the controller */
+
+.control-container {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    margin: 10px;
+}
+
+fieldset {
+    padding: 10px;
+    margin-bottom: 25px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 10px;
+}
+
+#algorithm-control-fieldset {
+    margin-bottom: 0px;
+}
+
+fieldset fieldset {
+    margin-bottom: 10px;
+}
+
+legend {
+    font-size: 18px;
+    margin-bottom: 0px;
+}
+
+.checkbox-container,
+.slider-container {
+    margin: 3px 5px;
+}
+
+input[type="range"] {
+    width: calc(100% - 20px);
+    margin: 0px 10px;
+}
+
+button {
+    background-color: #efefef;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 5px;
+    border-width: 1px;
+    border-color: #545454;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #dddddd;
+    cursor: pointer;
+}
+
+button:active {
+    background-color: #cccccc;
+}
+
+button:disabled {
+    background-color: #efefef;
+    cursor: not-allowed;
+}
+
+#multiple-lines-toggle {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
