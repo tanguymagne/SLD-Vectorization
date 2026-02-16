@@ -7,12 +7,10 @@ This repository contains the code for the "Single Line Drawing Vectorization" pa
 
 ## Benchmark
 
-> ⚠️ Due to licensing issues, we are not yet able to release the full benchmark dataset we created for this paper. Samples from this dataset can be found in the `sample` folder.
-
 The benchmark we created to evaluate our method is composed of 56 samples:
 - 3 samples available in the `sample/` folder.
 - 37 samples from Adobe Stock. Information on how to obtain these can be found in the [benchmark.md](https://github.com/tanguymagne/SLD-Vectorization/blob/main/benchmark.md) file.
-- 16 samples licensed from an artist. These are not yet available.
+- 16 samples licensed from Felix Hornung. A license for these can be obtained at [https://fhornung.net/sld](https://fhornung.net/sld).
 
 ## Installation
 
