@@ -38,7 +38,7 @@ def fit_curve(lists_ordered_points: List[np.array]) -> np.array:
         weights[i][1] = 0.1
 
     # Check if the curve is periodic
-    periodic = (lists_ordered_points[0][0] == lists_ordered_points[-1][-1]).all()
+    periodic = bool((lists_ordered_points[0][0] == lists_ordered_points[-1][-1]).all())
 
     # Fit the splines
     # The splines are fitted periodically only if the curve contains a single segment and is
